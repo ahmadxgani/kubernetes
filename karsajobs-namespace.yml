@@ -1,0 +1,7 @@
+# membuat object type namespace dengan nama karsajobs-ns
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: karsajobs-ns
+  labels:
+    app: karsajobs

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: karsajobs-ui
+    tier: frontend
+
+spec:
+  ports:
+    - protocol: TCP
+      port: 8000
+  selector:
+    app: karsajobs
+    tier: frontend

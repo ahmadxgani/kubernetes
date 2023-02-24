@@ -1,0 +1,41 @@
+# Kubernetes memiliki variasi versi API. v1 adalah salah satu versi API inti yang berisi banyak resource paling umum seperti Pod dan Node
+apiVersion: apps/v1
+# resource yang didefinisikan
+kind: Deployment
+# bagian ini berisi informasi yang relevan terkait resource dan berfungsi untuk membantu dalam pengidentifikasian.
+metadata:
+  name: backend
+  labels:
+    app: karsajobs
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+  template:
+    metadata:
+      labels:
+        app: karsajobs
+        type: backend
+    spec:
+      containers:
+        - name: karsajobs-backend
+          image: ghcr.io/ahmadxgani/karsajobs:latest
+          env:
+            - name: APP_PORT
+              value: "8080"
+            - name: MONGO_HOST
+              value: mongodb
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_ROOT_PASSWORD
+          ports:
+            - containerPort: 8080
